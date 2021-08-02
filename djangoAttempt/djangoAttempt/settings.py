@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 加入下面这行
+    'common.apps.CommonConfig',
+    #告诉 Django ， CommonConfig 是 common/apps.py 文件中定义的一个应用配置的类
 ]
 
 MIDDLEWARE = [
@@ -73,6 +76,7 @@ WSGI_APPLICATION = 'djangoAttempt.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# 数据库选项放在这里
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
