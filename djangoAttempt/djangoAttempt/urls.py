@@ -19,6 +19,9 @@ from django.urls import path
 # from sales.views import listorders
 # 导入一个include函数
 from django.urls import path, include
+# 静态文件服务
+from django.conf.urls.static import static
+
 # 添加路由记录
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,5 +31,7 @@ urlpatterns = [
     # 凡是 url 以 sales/  开头的，
     # 都根据 sales.urls 里面的 子路由表进行路由
     path('sales/', include('sales.urls')),
-    path('/api/mgr/',include('.mgr.urls')),
-]
+    path('api/mgr/',include('mgr.urls')),
+
+]    +  static("/", document_root="./z_dist")#上面没有匹配上匹配这个
+
