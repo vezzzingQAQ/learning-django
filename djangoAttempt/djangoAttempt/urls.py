@@ -24,8 +24,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # 添加如下的路由记录
     # path('sales/orders/', listorders),
-    
+
     # 凡是 url 以 sales/  开头的，
     # 都根据 sales.urls 里面的 子路由表进行路由
     path('sales/', include('sales.urls')),
+    path('/api/mgr/',include('.mgr.urls')),
 ]
