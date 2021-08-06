@@ -25,9 +25,11 @@ SECRET_KEY = 'django-insecure-5*09asbizz9wz#%gv)(+9!_q*llqsz+#1_oz7$r5@(=38w)($r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.0.103"]
+ALLOWED_HOSTS = ["192.168.0.103","192.168.43.189","192.168.0.105"]
 
-
+'''
+Path:cd coding && cd githubTempStore && cd learning-django
+'''
 # Application definition
 
 INSTALLED_APPS = [

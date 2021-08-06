@@ -1,12 +1,13 @@
-#处理有关操作用户数据的算法
 from django.http import JsonResponse
-from common.models import Customer
 import json
+
+
+from common.models import Customer
 
 def dispatcher(request):
     # 将请求参数统一放入request 的 params 属性中，方便后续处理
 
-    # GET请求 参数在url中，同过request 对象的 GET属性获取
+    # GET请求 参数 在 request 对象的 GET属性中
     if request.method == 'GET':
         request.params = request.GET
 
@@ -30,55 +31,61 @@ def dispatcher(request):
     else:
         return JsonResponse({'ret': 1, 'msg': '不支持该类型http请求'})
 
+
 def listcustomers(request):
-    qs=Customer.objects.values()
+    # 返回一个 QuerySet 对象 ，包含所有的表记录
+    qs = Customer.objects.values()
+
     # 将 QuerySet 对象 转化为 list 类型
     # 否则不能 被 转化为 JSON 字符串
-    retList=list(qs)
-    return JsonResponse({'ret':0,'retList':retList})
+    retlist = list(qs)
+
+    return JsonResponse({'ret': 0, 'retlist': retlist})
+
 
 def addcustomer(request):
-    # zidian
-    info = request.params['data']
+
+    info    = request.params['data']
+
     # 从请求消息中 获取要添加客户的信息
     # 并且插入到数据库中
-    # 返回值 就是对应插入记录的对象 
+    # 返回值 就是对应插入记录的对象
     record = Customer.objects.create(name=info['name'] ,
                             phonenumber=info['phonenumber'] ,
                             address=info['address'])
 
-    # Customer.objects.create 方法就可以添加一条Customer表里面的记录。
+
     return JsonResponse({'ret': 0, 'id':record.id})
 
-def modifycustomer(request):
 
+def modifycustomer(request):
     # 从请求消息中 获取修改客户的信息
     # 找到该客户，并且进行修改操作
-    
+
     customerid = request.params['id']
-    newdata    = request.params['newdata']
+    newdata = request.params['newdata']
 
     try:
         # 根据 id 从数据库中找到相应的客户记录
-        customer = Customer.objects.get(id=customerid)#参数为根据什么字段查
+        customer = Customer.objects.get(id=customerid)
     except Customer.DoesNotExist:
-        return  {
-                'ret': 1,
-                'msg': f'id 为`{customerid}`的客户不存在'
+        return {
+            'ret': 1,
+            'msg': f'id 为`{customerid}`的客户不存在'
         }
 
-
-    if 'name' in  newdata:
+    if 'name' in newdata:
         customer.name = newdata['name']
-    if 'phonenumber' in  newdata:
+    if 'phonenumber' in newdata:
         customer.phonenumber = newdata['phonenumber']
-    if 'address' in  newdata:
+    if 'address' in newdata:
         customer.address = newdata['address']
-    # 以上↑仅修改对象，未存入数据库
+
     # 注意，一定要执行save才能将修改信息保存到数据库
     customer.save()
 
     return JsonResponse({'ret': 0})
+
 
 def deletecustomer(request):
 
