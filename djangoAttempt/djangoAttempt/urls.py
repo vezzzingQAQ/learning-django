@@ -32,5 +32,5 @@ urlpatterns = [
     path('sales/', include('sales.urls')),
     path('api/mgr/',include('mgr.urls')),
 
-]    +  static("/", document_root="./z_dist")#上面没有匹配上匹配这个
+]+static("/", document_root="./z_dist")#上面没有匹配上匹配这个
 
